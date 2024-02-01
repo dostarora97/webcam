@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    #webcam1 {
+        transform: scalex(1);
+    }
+    #webcam2 {
+        transform: scalex(-1);
+    }
+</style>
+<body>
+
+<video id="webcam1" autoplay></video>
+<video id="webcam2" autoplay></video>
+
+<script>
+    const videoElement1 = document.getElementById("webcam1");
+
+    const videoElement2 = document.getElementById("webcam2");
+
+    if (videoElement1 && videoElement2 && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+            .getUserMedia({ video: true })
+            .then((stream) => {
+                videoElement1.srcObject = stream;
+                videoElement2.srcObject = stream;
+            })
+            .catch((error) => {
+                console.log("Something went wrong!", error);
+            });
+    }
+</script>
+
+</body>
+</html>
