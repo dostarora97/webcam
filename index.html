@@ -7,16 +7,37 @@
     #webcam2 {
         transform: scalex(-1);
     }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    div.container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    video {
+        flex: 1;
+        height: 50%;
+        width: 100%;
+    }
 </style>
 <body>
 
-<video id="webcam1" autoplay></video>
-<video id="webcam2" autoplay></video>
+<div class="container">
+    <video id="webcam1" autoplay></video>
+    <video id="webcam2" autoplay></video>
+</div>
 
 <script>
     const videoElement1 = document.getElementById("webcam1");
 
     const videoElement2 = document.getElementById("webcam2");
+
 
     if (videoElement1 && videoElement2 && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
