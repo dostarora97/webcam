@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
+    .webcam {
+        position: relative;
+        flex: 1;
+        width: 100%;
+    }
+
+    .webcam video {
+        width: 100%;
+        height: 100%;
+    }
+
     #webcam1 {
         transform: scalex(1);
     }
+
     #webcam2 {
         transform: scalex(-1);
     }
@@ -20,24 +32,62 @@
         height: 100vh;
     }
 
-    video {
-        flex: 1;
-        height: 50%;
-        width: 100%;
+    button#toggleLayout {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button#toggleLayout:hover {
+        background-color: #0056b3;
     }
 </style>
 <body>
 
-<div class="container">
-    <video id="webcam1" autoplay></video>
-    <video id="webcam2" autoplay></video>
+<button id="toggleLayout">Toggle Layout</button>
+
+<div class="container" id="container">
+    <div class="webcam">
+        <video id="webcam1" autoplay></video>
+    </div>
+    <div class="webcam">
+        <video id="webcam2" autoplay></video>
+    </div>
 </div>
 
 <script>
+    const container = document.getElementById('container');
+    const toggleButton = document.getElementById('toggleLayout');
+
+    toggleButton.addEventListener('click', () => {
+        if (container.style.flexDirection === 'row') {
+            container.style.flexDirection = 'column';
+            container.style.height = '100vh';
+            container.style.width = '100%';
+            container.querySelectorAll('.webcam').forEach(webcam => {
+                webcam.style.height = '50%';
+                webcam.style.width = '100%';
+            });
+        } else {
+            container.style.flexDirection = 'row';
+            container.style.width = '100vw';
+            container.style.height = '100%';
+            container.querySelectorAll('.webcam').forEach(webcam => {
+                webcam.style.height = '100%';
+                webcam.style.width = '50%';
+            });
+        }
+    });
+
     const videoElement1 = document.getElementById("webcam1");
-
     const videoElement2 = document.getElementById("webcam2");
-
 
     if (videoElement1 && videoElement2 && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
