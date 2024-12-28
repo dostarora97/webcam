@@ -66,6 +66,17 @@
     const container = document.getElementById('container');
     const toggleButton = document.getElementById('toggleLayout');
 
+    // Ensure proper layout on initial load
+    function setInitialLayout() {
+        container.style.flexDirection = 'column';
+        container.style.height = '100vh';
+        container.style.width = '100%';
+        container.querySelectorAll('.webcam').forEach(webcam => {
+            webcam.style.height = '50%';
+            webcam.style.width = '100%';
+        });
+    }
+
     toggleButton.addEventListener('click', () => {
         if (container.style.flexDirection === 'row') {
             container.style.flexDirection = 'column';
@@ -95,10 +106,13 @@
             .then((stream) => {
                 videoElement1.srcObject = stream;
                 videoElement2.srcObject = stream;
+                setInitialLayout(); // Set layout once streams are loaded
             })
             .catch((error) => {
                 console.log("Something went wrong!", error);
             });
+    } else {
+        setInitialLayout(); // Fallback if streams can't load
     }
 </script>
 
